@@ -19,12 +19,22 @@ function addBookToLibrary(){
   return false;
 }
 
+
 //Get form submit
 document.getElementById("submit").addEventListener("click", () => {
   addBookToLibrary();
   newBookModal.style.display = "none";
   document.getElementById("newBook").reset();
 });
+
+function removeBook(i) {
+  //get book info
+  //remove from array
+  //refresh cards
+
+  myLibrary.splice(i, 1);
+  console.log(myLibrary);
+}
 
  function generateBookCard(book) {
   var bookCheck = document.getElementsByClassName("" + book.title.split(" ").join("").toLowerCase());
@@ -39,6 +49,12 @@ document.getElementById("submit").addEventListener("click", () => {
 
   const cardBody = document.createElement("div");
   cardBody.classList.add("cardBody")
+  const closeBtn = document.createElement("button");
+  closeBtn.classList.add("closeCardBtn");
+  closeBtn.addEventListener("click", () => {
+    removeBook(myLibrary.indexOf(book));
+  })
+  closeBtn.innerHTML = "&times;";
   const bookTitle = document.createElement("h3");
   bookTitle.textContent = book.title;
   const bookAuthor = document.createElement("p");
@@ -46,6 +62,7 @@ document.getElementById("submit").addEventListener("click", () => {
   const bookPages = document.createElement("p");
   bookPages.textContent = "Pages: " + book.pages;
 
+  cardBody.appendChild(closeBtn)
   cardBody.appendChild(bookTitle);
   cardBody.appendChild(bookAuthor);
   cardBody.appendChild(bookPages);
