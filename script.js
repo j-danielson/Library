@@ -31,28 +31,32 @@ function removeBook(i) {
   //get book info
   //remove from array
   //refresh cards
-
-  myLibrary.splice(i, 1);
+  console.log(i)
+  console.log(i.title)
+  var deletedBook = document.getElementById("" + i.title.split(" ").join("").toLowerCase());
+  deletedBook.remove();
+  myLibrary.splice(myLibrary.indexOf(i), 1);
   console.log(myLibrary);
 }
 
  function generateBookCard(book) {
-  var bookCheck = document.getElementsByClassName("" + book.title.split(" ").join("").toLowerCase());
+  var bookCheck = document.getElementById("" + book.title.split(" ").join("").toLowerCase());
 
-  if (bookCheck.length > 0) {
+  if (bookCheck != null) {
     return
   }
   else {
 
   const card = document.createElement("div");
-  card.classList.add("bookCard", "" + book.title.split(" ").join("").toLowerCase());
-
+  card.classList.add("bookCard");
+  card.setAttribute("id", "" + book.title.split(" ").join("").toLowerCase());
+  console.log(document.classList);
   const cardBody = document.createElement("div");
   cardBody.classList.add("cardBody")
   const closeBtn = document.createElement("button");
   closeBtn.classList.add("closeCardBtn");
   closeBtn.addEventListener("click", () => {
-    removeBook(myLibrary.indexOf(book));
+    removeBook(book);
   })
   closeBtn.innerHTML = "&times;";
   const bookTitle = document.createElement("h3");
