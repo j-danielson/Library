@@ -1,12 +1,4 @@
 
-/*var mainDiv = document.getElementById("libraryCards");
-var resetBtn = document.createElement("button");
-resetBtn.addEventListener("click", function() {
-  localStorage.clear();
-  myLibrary = [];
-})
-mainDiv.appendChild(resetBtn);*/
-
 var myLibrary = [];
 
 
@@ -19,7 +11,8 @@ document.getElementById("submit").addEventListener("click", () => {
   addBookToLibrary();
   newBookModal.style.display = "none";
   document.getElementById("newBook").reset();
-  localStorage.setItem('savedLibrary', JSON.stringify(myLibrary));
+  updateStorage();
+
 });
 
 //FUNCTIONS
@@ -35,6 +28,10 @@ function pullStorage(){
     myLibrary = JSON.parse(retrievedObject);
     myLibrary.forEach(generateBookCard);
   }
+}
+
+function updateStorage() {
+  localStorage.setItem('savedLibrary', JSON.stringify(myLibrary));
 }
 
 function Book(title, author, pages, read) {
@@ -90,8 +87,9 @@ function readBook(i) {
   closeBtn.classList.add("closeCardBtn");
   closeBtn.addEventListener("click", () => {
     removeBook(book);
+    updateStorage();
   })
-  closeBtn.innerHTML = "&times;";
+  closeBtn.innerHTML = document.getElementById("circleBtn").innerHTML;
   const bookTitle = document.createElement("h3");
   bookTitle.textContent = book.title;
   const bookAuthor = document.createElement("p");
@@ -114,6 +112,7 @@ function readBook(i) {
     readBtn.innerHTML = "Finished?";
     readBtn.addEventListener("click", () => {
       readBook(book);
+      updateStorage();
     })
     cardBody.appendChild(readBtn);
   }
